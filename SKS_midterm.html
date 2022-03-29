@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  <link rel="stylesheet" href="SKS_midterm.css">
+</head>
+<body>
+  <div class="topbar">Saiya Sheth's Interactive Resume. Midterm Project for MUSA 611: Javascript for Planners at UPenn.</div>
+  <div class="map" id="map"></div>
+  <div class="slide-section">
+    <div class="slide-controls">
+      <label for="jump-to-slide">Filter&nbsp;By:</label>
+      <select class="slide-nav-select" id="jump-to-slide"></select>
+    </div>
+    <div class="slide-title"></div>
+    <div class="slide-content"></div>
+    <div class="slide-controls">
+      <button class="slide-nav-button" id="prev-slide">⧏</button>
+      <button class="slide-nav-button" id="next-slide">⧐</button>
+    </div>
+  </div>
+<!-- Javascript Imports -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script src="https://unpkg.com/showdown@1.9.0/dist/showdown.min.js"></script>
+  <script src="SKS_midterm.js"></script>
+  <script src="SKS_slides_midterm.js"></script>
+</body>
+</html>
