@@ -6,7 +6,8 @@
       "properties": {
         "marker-color": "#7e7e7e",
         "marker-size": "medium",
-        "Place": "Indiana"
+        "Place": "Indiana",
+        "content": "I attended West Lafayette Jr./Sr. High School and then **Indiana University- Bloomington**. At IU, I received a **Bachelor of Science in Public Affairs with a Certificate in Epidemiology**. During the summer between my freshman and sophomore year, I was an **NSF Women in Engineering Research Assistant at Purdue University** in the Department of Civil and Environmental Engineering where collected data for environmental risk research on carbon nanotubes in anaerobic environments. I presented my findings at the Indianapolis Regional Biotechnology and Nanotechnology Conference. Throughout college, I volunteered at a community garden and worked at a local farm-to-table restaurant and bakery."
       },
       "geometry": {
         "type": "Point",
@@ -21,7 +22,8 @@
       "properties": {
         "marker-color": "#7e7e7e",
         "marker-size": "medium",
-        "Place": "London"
+        "Place": "London",
+        "content": "I attended the **London School of Hygiene and Tropical Medicine** where I obtained a **M.Sc. in Demography**. My thesis was a comparative analysis on information obtained from focus groups and interviews in understanding sexual behavior change in HIV concordant and discordant couples after receiving ART in Karonga, Malawi.  While in London, I worked for Healthwatch Hackney as a research consultant where I collected qualitative data and authored a policy report on integrated care in Hackney which was presented to the Hackney Council. The report led to culturally appropriate solutions to increasing access to health services, end-of-life care, and integrated health and social care services across the borough."
       },
       "geometry": {
         "type": "Point",
