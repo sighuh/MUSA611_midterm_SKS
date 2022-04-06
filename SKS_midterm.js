@@ -1,22 +1,51 @@
 // set map, map tile style, zoom and lat, long coordinates for map starting place
-let map = L.map('map').setView([39.230176177209856,-87.66420898685969], 5); //make zoom dif and not at renselear
-let layerGroup = L.layerGroup().addTo(map);
-let resume = { features: [] };
+let map = L.map('map').setView([39.230176177209856,-87.66420898685969], 5); //make zoom dif == is 5
+//let layerGroup = L.layerGroup().addTo(map);
 
 L.tileLayer('https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
 }).addTo(map);
 
+// get dataset from raw link on my github
+let showMapData; //declaring this variable saying it exists 
+let points;
 
-// load the data -- dataset created from geojson.io and has 8 data points/polygons
-const showMapData = (features) => {
+const fetchMapData = () => {
+  fetch('https://raw.githubusercontent.com/sighuh/MUSA611_midterm_SKS/main/journey_midterm.json')
+  .then(resp => resp.json())
+  .then(data => {
+    points = data;//assigning something, this thing that exists represents value on right side of = sign
+    showMapData = L.geoJSON(data)
+    showMapData.bindTooltip(l => l.feature.properties.Place).
+    addTo(map);
+    showCurrentSlide();
+    console.log(data) // this is for debugging 
+  });
+}
+
+//declare and assign is defining something, eg const fetchMapDAta = () => {}
+//defining a function is const calling the function is below
+fetchMapData();
+
+/* load the data -- dataset created from geojson.io and has 8 data points/polygons
+const updateMap = (features) => {
   const layer = L.geoJSON(features);
   layerGroup.clearLayers();
   layerGroup.addLayer(layer);
 };
+*/
+
+// index slide at 0 and moves i+1 with next page; i-1 with previous page queryselector-links to HTML can use console to look up where the element is 
+let currentSlideIndex = 0;
+const slideTitleDiv = document.querySelector('.slide-title');
+const slideContentDiv = document.querySelector('.slide-content');
+const slidePrevButton = document.querySelector('#prev-slide');
+const slideNextButton = document.querySelector('#next-slide');
+//const slideJumpSelect = document.querySelector('#jump-to-slide');
+
 
 //make markers and map layers based on the json file  
-function updateMap(features) {
+function updateMap(collection) {
   layerGroup.clearLayers();
   const geoJsonLayer = L.geoJSON(features, { pointToLayer: (p, latlng) => L.marker(latlng) })
     .bindTooltip(l => l.feature.properties)
@@ -25,164 +54,76 @@ function updateMap(features) {
   return geoJsonLayer;
 }
 
-//what? is this to filter? 
-function makeTypeCollection(type) {
+function makeEraCollection(era) {
   return {
     type: 'FeatureCollection',
-    features: resume.features.filter(f => f.properties.type === type),
+    features: lifeCollection.features.filter(f => f.properties.era === era),
   };
 }
 
-// index slide at 0 and moves +1 with next page; -1 with previous page
-let currentSlideIndex = 0;
+function showSlide(slide) {
+  slideTitleDiv.innerHTML = `<h3>${slide.properties.Place}</h3>`;
+  slideContentDiv.innerHTML = `<p>${slide.properties.content}</p>`
 
-//
-const slidesDiv = document.querySelector('.slides');
-
-// linking slides to map dataset
-function syncMapToSlide(slide) {
-  const collection = slide.era ? makeTypeCollection(slide.type) : resume;
-  const layer = updateMap(collection);
-
-//the way the map moves from point to point- make pan instead of fly
-  function handlePanEnd() {
-    if (slide.showpopups) {
-      layer.eachLayer(l => {
-        l.bindTooltip(l.feature.properties.label, { permanent: true });
-        l.openTooltip();
-      });
+  map.eachLayer(marker => {
+    if (marker.feature && marker.feature.properties.Place === slide.properties.Place) {
+      map.flyTo(marker.getLatLng(), 10);
+  
+/* Open the marker popup
+      marker
+        .bindPopup(`<h3>${slide.properties.Location}</h3>`)
+        .openPopup();
+    } else {
+      marker.closePopup(); */
     }
-    map.removeEventListener('moveend', handlePanEnd);
-  }
-
-  map.addEventListener('moveend', handlePanEnd);
-  if (slide.bounds) {
-    map.flyToBounds(slide.bounds);
-  } else if (slide.type) {
-    map.panToBounds(layer.getBounds());
-  }
-}
-
-// map features and slide linked 
-function syncMapToCurrentSlide() {
-  const slide = slides[currentSlideIndex];
-  syncMapToSlide(slide);
-}
-
-//building initial page
-function initSlides() {
-  const converter = new showdown.Converter({ smartIndentationFix: true });
-
-//what? this has an error and doesnt work 
-  slidesDiv.innerHTML = '';
-  for (const [index, slide] of slides.entries()) {
-    const slideDiv = htmlToElement(`
-      <div class="slide" id="slide-${index}">
-        <h2>${slide.title}</h2>
-        ${converter.makeHtml(slide.content)}
-      </div>
-    `);
-   slidesDiv.appendChild(slideDiv);
-  }
-}
-
-// get dataset from raw link on my github
-const fetchMapData = () => {
-  fetch('https://raw.githubusercontent.com/sighuh/MUSA611_midterm_SKS/main/journey_midterm.json')
-  .then(resp => resp.json())
-  .then(data => {
-    resume = data;
-    syncMapToCurrentSlide();
-    console.log(data) // this is for debugging 
   });
-};
+}
 
-//defining a function is const calling the function is below
-fetchMapData();
+  function showCurrentSlide() {
+    const slide = points.features[currentSlideIndex];
+    showSlide(slide);
+  }
 
-// moving from slide to slide
-function calcCurrentSlideIndex() {
-  const scrollPos = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const slideDivs = document.getElementsByClassName('slide');
-
-  let i;
-  for (i = 0; i < slideDivs.length; i++) {
-    const slidePos = slideDivs[i].offsetTop;
-    if (slidePos - scrollPos - windowHeight > 0) {
-      break;
+  // moving from slide to slide, iterating through to next, and moving back to previous
+  function goNextSlide() {
+    currentSlideIndex++;
+  
+    if (currentSlideIndex === 23) {
+      currentSlideIndex = 0;
+    }
+  
+    showCurrentSlide();
+  }
+  
+  function goPrevSlide() {
+    currentSlideIndex--;
+  
+    if (currentSlideIndex < 0) {
+      currentSlideIndex = slides.length - 1;
+    }
+  
+    showCurrentSlide();
+  }
+  
+  function jumpToSlide() {
+    currentSlideIndex = parseInt(slideJumpSelect.value, 10);
+    showCurrentSlide();
+  }
+ /* not needed because taking out the ability to jump to different slides, took out line 127 because it was called from this function
+  function initSlideSelect() {
+    slideJumpSelect.innerHTML = ''; //empty string to make inner HTML empty - that div container becomes empty
+    for (const [index, slide] of slides.entries()) {
+      const option = document.createElement('option');
+      option.value = index;
+      option.innerHTML = slide.title;
+      slideJumpSelect.appendChild(option);
     }
   }
-
-  if (i === 0) {
-    currentSlideIndex = 0;
-  } else if (currentSlideIndex != i - 1) {
-    currentSlideIndex = i - 1;
-    syncMapToCurrentSlide();
-  }
-}
-
-document.addEventListener('scroll', calcCurrentSlideIndex);
-
-initSlides();
-syncMapToCurrentSlide();
-
-/* ALl the code I attempted that did not work
-
-// next step is to choose which feature i want to focus on when
-let buildPage = function(){
-  featureGroup.map(function(features){
-    map = map.removeLayer(features)
-    feature = []
-  })
-};
-
-
- //defining the current page
-let currentPage = 0;
-function showCurrentPage() {
-  const slide = slides[currentPage];
-  showSlide(slide);
-}
-
-//function to move to the next page
-let nextPage = function(){
-    //event handling for proceeding forward in slideshow
-    let nextPage = currentPage + 1; //set it equal below to continue to move through the slides
-    currentPage = nextPage;
-    buildPage(slides[nextPage]);
-  }
-
-//function to move to the previous page
-let prevPage = function(){
-  //event handling for going backward in slideshow
-  let prevPage = currentPage -1
-  currentPage = prevPage
-  buildPage(slides[prevPage])
-}
-
-// add event listener to button to execute prePage or nextPage function
-const prevBtn = document.querySelector('button');
-prevBtn.addEventListener('click', prevPage);
-
-const nextBtn = document.querySelector('button');
-nextBtn.addEventListener('click', nextPage);
-
-const sidebar = document.createElement('sidebar');
-
-// JS to appear in HTML
-document.getElementsByClassName('sidebar');
-sidebar.innerHTML = 'page0.content';
-
-//map to HTML
-document.getElementsByClassName('map');
-content.innerHTML = layerGroup
-
-const slideJumpSelect = document.querySelector('#jump-to-slide');
-
-//function that shows text in page0 and focuses on indiana
-function buildPage0() {
- content.innerHTML = 'page0.title';
-//}
-
 */
+
+slidePrevButton.addEventListener('click', goPrevSlide);
+slideNextButton.addEventListener('click', goNextSlide);
+//slideJumpSelect.addEventListener('click', jumpToSlide);
+
+//initSlideSelect();
+// showCurrentSlide();
