@@ -5,23 +5,56 @@ body {
     min-height: 100vh;
     flex-direction: column;
     font-family: system-ui;
-    background-color: rgba(204, 190, 236, 0.719);
+    background-color:#eee;
     color: black;
   }
   
-  .topbar {
+  .top {
     min-height: 10vh;
     display: flex;
     flex-direction: column;
   }
 
+  .main {
+    flex-direction: row;
+    display: flex;
+    height: 100%;
+}
 
   .map {
     flex-grow: 1;
+    width: 100%
   }
-  
 
-  .slide-section {
+  .content {
+    flex-direction: column;
+    width: 500px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: #eee;
+    color: rgb(14, 12, 12);
+}
+
+.story {
+    width: 100%;
+    padding: 1rem;
+}
+
+.slide-title{
+  max-height: 1rem;
+}
+  
+.slide-controls {
+    display: block;
+    width: 400px;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: -0.5rem;
+    position: absolute;
+        bottom:0px;
+}
+  
+.slide-section {
     z-index: 1000;
   
     display: flex;
@@ -30,33 +63,6 @@ body {
     box-shadow: -0.5rem 0 1rem  rgba(234, 238, 236, 0.699);
     padding: 1rem;
     width: 20rem;
-  }
-  
-  .slide-content {
-    flex-grow: 1;
-  }
-  
-  .slide-controls {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    column-gap: 0.5rem;
-  
-    width: 100%;
-  }
-  
-  .slide-nav-button {
-    transition: all 0.1s;
-  
-    padding: 0;
-    margin: 1rem;
-    width: 4rem;
-    height: 3rem;
-    border: 1px solid rgb(80, 105, 95);
-    border-radius: 0.25rem;
-  
-    background-color: #eee;
-    font-size: 1.5em;
   }
   
   .slide-nav-button:hover {
