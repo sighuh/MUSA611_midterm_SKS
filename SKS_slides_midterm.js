@@ -1,14 +1,5 @@
 const slides = [
     {
-      title: "Let's begin!",
-      content: `
-        Here is my resume presented geospatially. Midterm Project for MUSA 611: Javascript for Planners at UPenn. 
-      `,
-      type: null,
-      bounds: [([39.230176177209856,-87.66420898685969], 5)],
-    },
-  
-    {
       title: 'West Lafayette and Bloomington, IN, USA',
       content: `
         I attended West Lafayette Jr./Sr. High School and then **Indiana University- Bloomington**.
@@ -20,10 +11,9 @@ const slides = [
         Throughout college, I volunteered at a community garden and worked at a local farm-to-table 
         restaurant and bakery.  
       `,
-      type: 'education',
+      era: 'education',
       showpopups: true,
     },
-  
     {
       title: 'London, UK',
       content: `
@@ -35,7 +25,7 @@ const slides = [
         presented to the Hackney Council. The report led to culturally appropriate solutions to increasing 
         access to health services, end-of-life care, and integrated health and social care services across the borough. 
       `,
-      type: 'education',
+      era: 'education',
       showpopups: true,
     },
   
@@ -43,34 +33,34 @@ const slides = [
       title: 'Kobe-shi Hyogo, Japan',
       content: `
         After graduating, I headed to Kobe, Japan to participate in a post-graduate fellowship at the 
-        **World Health Organization Centre for Health Research**. My project was analyzing Demographic Health Survey
+        World Health Organization Centre for Health Research. My project was analyzing Demographic Health Survey
         data to determine sample sizes for mapping intra-urban socio-environmental health disparities. I used 
         a newly developed Excel macro that fed into QGIS, the Urban Health Index, for visualizing data. 
         The data was used to create maps for the WHO Urban Health Report. 
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
     {
       title: 'New York City, NY, USA',
       content: `
-      At **Sapna NYC**, I worked to build their capacity as a small non-profit. I wrote successful grants and 
+      At Sapna NYC, I worked to build their capacity as a small non-profit. I wrote successful grants and 
       planned fundraising events resulting in $50,000 to support workforce development and ESL programs. 
       I coordinated and assisted with designing workshops for participants on job training, health services, 
       and education while building partnerships with local government agencies and other community-based 
       organizations. I led case management for the NYC Department of Youth and Community Development Healthy 
       Families program. In the neighborhood Sapna NYC was located, Parkchester, I enrolled over 35 families in 3 months. 
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
     {
       title: 'Atlanta, GA, USA',
       content: `
-      I spend two years working at **PRISM**, a research group based at **Emory University Rollins School of 
-      Public Health**. At PRISM, I managed and ran the ePrEP Telemedicine Pilot Study 
+      I spent two years working at PRISM, a research group based at Emory University Rollins School of 
+      Public Health. At PRISM, I managed and ran the ePrEP Telemedicine Pilot Study 
       from recruitment to final coordination of care. The pilot study was incredibly successful, over 50 
       participants were enrolled and an estimated 200 HIV cases were averted. The successful pilot study 
       led to National Institute of Health and Adolescent Trials Network funding for two large-scale HIV prevention Randomized Control Trials (RCT), ePrEP 
@@ -80,12 +70,12 @@ const slides = [
       Additionally, I coordinated a sub-study for successfully validating syphilis testing in tandem with 
       HIV testing in an EDTA blood plasma collection tube. 
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
     {
-      title: 'Rome and Ancona, Italy',
+      title: 'Rome, Italy',
       content: `
       After leaving Atlanta, I got a job working remotely for Learning Ally LAABs on the Research and Innovation
        team. At Learning Ally, my work consisted of synthesizing complex research and legal information for
@@ -94,20 +84,21 @@ const slides = [
         of 0km food in Italian cuisine. While in Rome, I visited friends in Ancona and we sailed across
          the Adriatic Sea.
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
     {
       title: 'Lisbon and The Algarve, Portugal',
       content: `
-      Still working at Learning Ally LAABs, I ventured to Portugal where I worked on a olive farm that produced
+      <Still working at Learning Ally LAABs, I ventured to Portugal where I worked on a olive farm that produced
        olive oil in the southern part of the county, the Algarve. I volunteered at local gardens in Lisbon 
        and Porto and learned about the important role urban agriculture played in the Portuguese economy,
         the fusion of foods from the mix of cultures present, and the devastating impact European Union 
-        policies concerning agriculture have had on Portugal. 
+        policies concerning agriculture have had on Portugal.</p>
+        <p><img src=""></p> -- file path inside "" 
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
@@ -117,7 +108,7 @@ const slides = [
       Continuing to work remotely at Learning Ally LAABs, I then went to Mexico City for a few months. 
       In Mexico City, I enrolled in a cooking course and art course. 
       `,
-      type: 'professional',
+      era: 'professional',
       showpopups: true,
     },
   
@@ -132,9 +123,8 @@ const slides = [
        the Venture Initiation Program through Wharton and the NSF i-Corp Program Mid-Atlantic Region. 
        While in school I have been the board co-chair for Laal NYC. 
       `,
-      type: 'education',
+      era: 'education',
       showpopups: true,
     },
   
-  ];
-  
+  ]; 
